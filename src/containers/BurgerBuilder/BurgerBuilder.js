@@ -1,13 +1,14 @@
 import React, { Component, Fragment } from "react";
 
+import Burger from "../../components/Burger/Burger";
+
 class BurgerBuilder extends Component {
   state = {};
 
   render() {
     return (
       <Fragment>
-        <div>burger</div>
-        <div>build controls</div>
+        <Burger />
       </Fragment>
     );
   }
