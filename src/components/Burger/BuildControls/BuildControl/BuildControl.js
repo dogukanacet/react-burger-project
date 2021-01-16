@@ -4,6 +4,7 @@ import styles from "./BuildControl.module.css";
 const buildControl = (props) => (
   <div className={styles.BuildControl}>
     <div className={styles.Label}>{props.label}</div>
+    
     <button
       onClick={props.removed}
       disabled={props.disable}
