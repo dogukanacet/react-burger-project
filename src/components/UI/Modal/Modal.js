@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 
-import styles from "./Modal.module.css";
+import classes from "./Modal.module.css";
 
 import Backdrop from "../Backdrop/Backdrop";
 
@@ -21,7 +21,7 @@ class Modal extends Component {
       <Fragment>
         <Backdrop show={this.props.show} clicked={this.props.closeModal} />
         <div
-          className={styles.Modal}
+          className={classes.Modal}
           style={{
             transform: this.props.show ? "translateY(0)" : "translateY(-100vh)",
             opacity: this.props.show ? "1" : "0",

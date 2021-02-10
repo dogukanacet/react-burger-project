@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from "react";
 
+import { Route, Switch } from "react-router-dom";
+
 import axios from "../../axios-orders";
 
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
@@ -9,6 +11,7 @@ import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import Checkout from "../Checkout/Checkout";
 
 const INGREDIENT_PRICES = {
   salad: 0.5,
@@ -34,10 +37,11 @@ class BurgerBuilder extends Component {
   componentDidMount() {
     axios
       .get(
-        "https://react-burger-604f3-default-rtdb.europe-west1.firebasedatabase.app/ingredients."
+        "https://react-burger-604f3-default-rtdb.europe-west1.firebasedatabase.app/ingredients.json"
       )
       .then((response) => {
-        this.setState({ ingredients: response.data }) && console.log(response);
+        console.log(response);
+        this.setState({ ingredients: response.data });
       })
       .catch((error) => {
         this.setState({ error: true });
@@ -96,32 +100,35 @@ class BurgerBuilder extends Component {
 
   purchaseContinueHandler = () => {
     // alert('You continue!');
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: "Max Schwarzmüller",
-        address: {
-          street: "Teststreet 1",
-          zipCode: "41351",
-          country: "Germany",
-        },
-        email: "test@test.com",
-      },
-      deliveryMethod: "fastest",
-    };
-    axios
-      .post("/orders.", order)
-      .then((response) => {
-        this.setState({ loading: false, purchasing: false });
-      })
-      .catch((error) => {
-        this.setState({ loading: false, purchasing: false });
-      });
+    // this.setState({ loading: true });
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice,
+    //   customer: {
+    //     name: "Max Schwarzmüller",
+    //     address: {
+    //       street: "Teststreet 1",
+    //       zipCode: "41351",
+    //       country: "Germany",
+    //     },
+    //     email: "test@test.com",
+    //   },
+    //   deliveryMethod: "fastest",
+    // };
+    // axios
+    //   .post("/orders.json", order)
+    //   .then((response) => {
+    //     this.setState({ loading: false, purchasing: false });
+    //   })
+    //   .catch((error) => {
+    //     this.setState({ loading: false, purchasing: false });
+    //   });
+    this.props.history.push("/checkout");
   };
 
   render() {
+    let qwe = this.state.ingredients;
+    console.log(qwe);
     const disabledInfo = {
       ...this.state.ingredients,
     };
@@ -138,15 +145,17 @@ class BurgerBuilder extends Component {
     if (this.state.ingredients) {
       burger = (
         <Fragment>
-          <Burger ingredients={this.state.ingredients} />
-          <BuildControls
-            ingredientAdded={this.addIngredientHandler}
-            ingredientRemoved={this.removeIngredientHandler}
-            disabled={disabledInfo}
-            purchasable={this.state.purchasable}
-            ordered={this.purchaseHandler}
-            price={this.state.totalPrice}
-          />
+          <Route exact path="/">
+            <Burger ingredients={this.state.ingredients} />
+            <BuildControls
+              ingredientAdded={this.addIngredientHandler}
+              ingredientRemoved={this.removeIngredientHandler}
+              disabled={disabledInfo}
+              purchasable={this.state.purchasable}
+              ordered={this.purchaseHandler}
+              price={this.state.totalPrice}
+            />
+          </Route>
         </Fragment>
       );
       orderSummary = (
