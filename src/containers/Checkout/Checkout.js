@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route } from "react-router-dom";
 
 import ContactData from "./ContactData/ContactData";
-import Button from "../../components/UI/Button/Button";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 
 import classes from "./Checkout.module.css";
@@ -40,7 +39,7 @@ class Checkout extends Component {
 
   render() {
     return (
-      <div>
+      <div className={classes.Checkout}>
         <CheckoutSummary
           ingredients={this.state.ingredients}
           checkoutCancelled={this.checkoutCancelled}
