@@ -11,7 +11,7 @@ class OrderSummary extends Component {
     const ingredientKeys = Object.keys(this.props.ingredients);
     const ingredientSummary = ingredientKeys.map((igKey, i) => (
       <li key={i}>
-        {igKey} - {this.props.ingredients[igKey]}
+        {igKey}:  {this.props.ingredients[igKey]}
       </li>
     ));
     return (
